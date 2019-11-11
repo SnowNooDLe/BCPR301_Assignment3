@@ -1,0 +1,10 @@
+pen black
+x 0
+y 0
+pen_down
+draw 20 300
+draw 30 300
+draw 40 300
+draw 50 300
+draw 60 300
+draw 70 300

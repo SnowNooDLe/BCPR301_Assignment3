@@ -1,35 +1,44 @@
-from tigr import AbstractParser
-import argparse
-
-# Treatment for Lazy code
-# Removed StringParser as the method parse was really similar to
-# IntegerParser's parse. But at the same time,
-# the place where StringParser was used,
-# did not really need it.So got rid of it, still functioning
+from TIGr import AbstractParser
 
 
-class IntegerParser(AbstractParser):
+class Parser(AbstractParser):
     def parse(self, raw_source):
-        self.source = raw_source
-        self.data = int(self.source)
-        return self.data
-
-
-class ArgumentParser(AbstractParser):
-    parser = argparse.ArgumentParser('Interface for Graphics, Turtle, Tkinter')
-    parser.add_argument('-c', '--moduleCanvas', type=str, metavar='',
-                        help='Choose canvas')
-    parser.add_argument('-e', '--exit', type=str, metavar='',
-                        help='Exit CMD')
-    group = parser.add_mutually_exclusive_group()
-    group.add_argument('-t', '--turtle', action='store_true',
-                       help='Go to Turtle Prompt')
-    group.add_argument('-k', '--Tkinter', action='store_true',
-                       help='Open TKinter GUI')
-    group.add_argument('-g', '--graphics', action='store_true',
-                       help='Go to Graphics prompt')
-
-    def parse(self, raw_source):
-        args = ArgumentParser.parser.parse_args()
-        module = args.moduleCanvas
-        return module
+        for row in raw_source:
+            self.command = row[0]
+            try:
+                self.data = row[1]
+            except:
+                self.data = 0
+            try:
+                if self.command == 'P':
+                    self.drawer.select_pen(self.data)
+                if self.command == 'D':
+                    self.drawer.pen_down()
+                if self.command == 'U':
+                    self.drawer.pen_up()
+                if self.command == 'N':
+                    self.drawer.draw_line(0, self.data)
+                if self.command == 'E':
+                    self.drawer.draw_line(90, self.data)
+                if self.command == 'S':
+                    self.drawer.draw_line(180, self.data)
+                if self.command == 'W':
+                    self.drawer.draw_line(270, self.data)
+                if self.command == 'X':
+                    self.drawer.go_along(self.data)
+                if self.command == 'Y':
+                    self.drawer.go_down(self.data)
+                if self.command == 'U':
+                    self.drawer.pen_up()
+                if self.command == 'C':
+                    self.drawer.draw_circle(self.data)
+                if self.command == 'R':
+                    self.drawer.draw_rectangle(self.data)
+                if self.command == 'T':
+                    self.drawer.draw_triangle(self.data)
+            except:
+                print(f"The Command {self.command} : {self.data} could not run")
+        try:
+            self.drawer.end()
+        except:
+            print("Completed")
