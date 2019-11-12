@@ -1,8 +1,38 @@
 from TIGr import AbstractParser
 
 
+class ParentDrawLiner(object):
+    def __init__(self, drawer, data):
+        self.drawer = drawer
+        self.data = data
+
+    def draw_line(self):
+        pass
+
+
+class DrawLinerToNorth(ParentDrawLiner):
+    def draw_line(self):
+        return self.drawer.draw_line(0, self.data)
+
+
+class DrawLinerToEast(ParentDrawLiner):
+    def draw_line(self):
+        return self.drawer.draw_line(90, self.data)
+
+
+class DrawLinerToSouth(ParentDrawLiner):
+    def draw_line(self):
+        return self.drawer.draw_line(180, self.data)
+
+
+class DrawLinerToWest(ParentDrawLiner):
+    def draw_line(self):
+        return self.drawer.draw_line(270, self.data)
+
+
 class Parser(AbstractParser):
     def parse(self, raw_source):
+        test = self.drawer
         for row in raw_source:
             self.command = row[0]
             try:
@@ -17,13 +47,17 @@ class Parser(AbstractParser):
                 if self.command == 'U':
                     self.drawer.pen_up()
                 if self.command == 'N':
-                    self.drawer.draw_line(0, self.data)
+                    drawer = DrawLinerToNorth(self.drawer, self.data)
+                    drawer.draw_line()
                 if self.command == 'E':
-                    self.drawer.draw_line(90, self.data)
+                    drawer = DrawLinerToEast(self.drawer, self.data)
+                    drawer.draw_line()
                 if self.command == 'S':
-                    self.drawer.draw_line(180, self.data)
+                    drawer = DrawLinerToSouth(self.drawer, self.data)
+                    drawer.draw_line()
                 if self.command == 'W':
-                    self.drawer.draw_line(270, self.data)
+                    drawer = DrawLinerToWest(self.drawer, self.data)
+                    drawer.draw_line()
                 if self.command == 'X':
                     self.drawer.go_along(self.data)
                 if self.command == 'Y':
@@ -37,7 +71,7 @@ class Parser(AbstractParser):
                 if self.command == 'T':
                     self.drawer.draw_triangle(self.data)
             except:
-                print(f"The Command {self.command} : {self.data} could not run")
+                print(f"The Command {self.command}: {self.data} could not run")
         try:
             self.drawer.end()
         except:

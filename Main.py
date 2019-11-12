@@ -89,7 +89,7 @@ class Main():
                     outputs.append(a_compay.get_product_info(arg))
 
             if len(outputs) == 0:
-                outputs.append(Reader(Parser(TXTDrawer())))
+                outputs.append(a_compay.get_product_info("-TXT"))
 
             for output in outputs:
                 output.go()
