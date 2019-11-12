@@ -57,13 +57,16 @@ class TKInterDrawer(Product):
     def do_use(self):
         return Reader(Parser(TKDrawer()))
 
+
 class TurtleDrawer(Product):
     def do_use(self):
         return Reader(Parser(TDrawer()))
 
+
 class TextDrawer(Product):
     def do_use(self):
         return Reader(Parser(TXTDrawer()))
+
 
 class PGDrawer(Product):
     def do_use(self):
@@ -75,12 +78,15 @@ def main():
     a_compay = CompanyA()
     if len(sys.argv) == 1:
         print(
-            "You need to specify a CMD loop to enter, -TKCMD or you can specify a TEXT file and declare outputs with -TK for TKinter, -T for Turtle or -TXT for txt ouput...GOOD LUCK!")
+            "You need to specify a CMD loop to enter, -TKCMD or "
+            "you can specify a TEXT file and declare outputs with "
+            "-TK for TKinter, -T for Turtle or -TXT for txt ouput..."
+            "GOOD LUCK!")
     else:
         for arg in sys.argv:
             if arg in ['-TKCMD', '-TK', '-T', '-TXT', '-P']:
-                outputs.append(a_compay.get_product_info(arg))        
-        
+                outputs.append(a_compay.get_product_info(arg))
+
         if len(outputs) == 0:
             outputs.append(Reader(Parser(TXTDrawer())))
 
@@ -91,4 +97,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
