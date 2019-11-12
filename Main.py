@@ -73,27 +73,29 @@ class PGDrawer(Product):
         return Reader(Parser(PyGameDrawer()))
 
 
-def main():
-    outputs = []
-    a_compay = CompanyA()
-    if len(sys.argv) == 1:
-        print(
-            "You need to specify a CMD loop to enter, -TKCMD or "
-            "you can specify a TEXT file and declare outputs with "
-            "-TK for TKinter, -T for Turtle or -TXT for txt ouput..."
-            "GOOD LUCK!")
-    else:
-        for arg in sys.argv:
-            if arg in ['-TKCMD', '-TK', '-T', '-TXT', '-P']:
-                outputs.append(a_compay.get_product_info(arg))
+class Main():
+    def main(self):
+        outputs = []
+        a_compay = CompanyA()
+        if len(sys.argv) == 1:
+            print(
+                "You need to specify a CMD loop to enter, -TKCMD or "
+                "you can specify a TEXT file and declare outputs with "
+                "-TK for TKinter, -T for Turtle or -TXT for txt ouput..."
+                "GOOD LUCK!")
+        else:
+            for arg in sys.argv:
+                if arg in ['-TKCMD', '-TK', '-T', '-TXT', '-P']:
+                    outputs.append(a_compay.get_product_info(arg))
 
-        if len(outputs) == 0:
-            outputs.append(Reader(Parser(TXTDrawer())))
+            if len(outputs) == 0:
+                outputs.append(Reader(Parser(TXTDrawer())))
 
-        for output in outputs:
-            output.go()
-        sys.exit()
+            for output in outputs:
+                output.go()
+            sys.exit()
 
 
 if __name__ == '__main__':
-    main()
+    main = Main()
+    main.main()
